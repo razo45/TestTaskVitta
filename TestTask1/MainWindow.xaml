@@ -1,0 +1,71 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:TestTask1"
+        xmlns:RuntimeBinder="clr-namespace:Microsoft.CSharp.RuntimeBinder;assembly=Microsoft.CSharp" xmlns:SqlServer="clr-namespace:System.Data.Entity.SqlServer;assembly=EntityFramework.SqlServer" x:Class="TestTask1.MainWindow"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="662" Width="802" ResizeMode="NoResize" MinWidth="800" MinHeight="576">
+    <Grid Margin="0,0,0,38">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="dataGridOrder" ItemsSource="{Binding GridOrders}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"  Margin="0,39,0,0" HorizontalAlignment="Left" Width="320" SelectionChanged="dataGridOrder_SelectionChanged" BorderBrush="#FF0182FF"  Height="280" VerticalAlignment="Top" >
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#FF3B67C6"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#FF3B67C6"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Сумма оплаты" Binding="{Binding PaymentAmount}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid x:Name="dataGridReplenishments" ItemsSource="{Binding GridReplenishments}" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" Margin="0,39,0,0" HorizontalAlignment="Right" Width="329" SelectionChanged="dataGridReplenishments_SelectionChanged" Height="280" VerticalAlignment="Top">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#FF3B67C6"/>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+                   Color="#FF3B67C6"/>
+            </DataGrid.Resources>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Номер" Binding="{Binding ID}"/>
+                <DataGridTextColumn Header="Дата" Binding="{Binding Date, StringFormat=\{0:dd.MM.yyyy\}}"/>
+                <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}"/>
+                <DataGridTextColumn Header="Остаток" Binding="{Binding Remains}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Label x:Name="NameOrder" Content="Заказ: " HorizontalAlignment="Left" Margin="10,8,0,0" VerticalAlignment="Top" Width="310"/>
+        <Label x:Name="NameRepl" Content="Приход денег: " Margin="0,8,0,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="329"/>
+        <Button x:Name="But" IsEnabled="False" Content="Выберите заказ" Margin="325,42,334,0" VerticalAlignment="Top" Height="37" Click="But_Click"/>
+        <WrapPanel Margin="5,346,0,0" Height="21" VerticalAlignment="Top" HorizontalAlignment="Left">
+            <TextBox x:Name="Sum"  TextWrapping="Wrap" Text="" Width="120" materialDesign:HintAssist.Hint="address"  materialDesign:HintAssist.IsFloating="True"></TextBox>
+            <Button Content="Добавить" Width="70" Margin="5,0,0,0" Click="Button_Click_2"/>
+        </WrapPanel>
+        <Label Content="Добавить заказ" HorizontalAlignment="Left" Margin="0,319,0,0" VerticalAlignment="Top"/>
+        <Grid Margin="0,372,0,0">
+            <DataGrid x:Name="GridPayments" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False" ItemsSource="{Binding GridPayments}" IsReadOnly="True" Margin="0,26,0,-254">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Номер" Binding="{Binding ID}"/>
+                    <DataGridTextColumn Header="Номер заказа" Binding="{Binding OrderID}"/>
+                    <DataGridTextColumn Header="Номер прихода денег" Binding="{Binding ReplenishmentID}"/>
+                    <DataGridTextColumn Header="Сумма" Binding="{Binding Amount}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <Button x:Name="HistoryBut" Content="Показать историю только выбраного заказа" HorizontalAlignment="Left" Margin="0,1,0,0" Width="320" Click="HistoryBut_Click" Height="20" VerticalAlignment="Top"/>
+            <Button x:Name="HistoryBut2" Content="Показать историю только выбраного прихода денег" Margin="0,1,0,0" HorizontalAlignment="Right" Width="329" Click="HistoryBut2_Click" Height="20" VerticalAlignment="Top"/>
+            <Button Content="Вся истрия" Margin="336,1,345,0" Click="Button_Click_1" Height="20" VerticalAlignment="Top"/>
+        </Grid>
+        <WrapPanel Margin="0,346,5,0" Height="21" VerticalAlignment="Top" HorizontalAlignment="Right" FlowDirection="LeftToRight">
+            <Button Content="Добавить" Width="70" Margin="0,0,5,0" Click="Button_Click_3"/>
+            <TextBox x:Name="Rep"  TextWrapping="Wrap" Text="" Width="120" materialDesign:HintAssist.Hint="Сумма" materialDesign:HintAssist.IsFloating="True"/>
+        </WrapPanel>
+        <Label Content="Добавить &quot;Приход денег&quot;" HorizontalAlignment="Right" Margin="0,319,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
